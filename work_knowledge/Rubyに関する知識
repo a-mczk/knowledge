@@ -13,3 +13,17 @@
   arr = Array.new()
   arr = Array.new # 等価
   arr = [] # 等価
+
+インスタンス変数とかアクセスメソッドとか
+http://www.rubylife.jp/ini/class/index6.html
+http://www.rubylife.jp/ini/class/index4.html
+
+yield
+http://rubist.blog77.fc2.com/blog-entry-97.html
+
+
+ダブルクォーテーションの方が高機能な処理を行っているため、シングルクォーテーションの方が処理が速い。
+変数の置換を行う必要が無い場合はシングルクォーテーションを使うようにした方がよさそう。
+
+・ダブルクォーテーション　 ･･･ 文字列中の変数を変数値に置換する
+・シングルクォーテーション ･･･ 文字列中の変数を変数値に置換しない

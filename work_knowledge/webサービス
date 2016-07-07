@@ -1,0 +1,14 @@
+webサービスについて
+
+駅すぱあとwebサービス Documents
+http://docs.ekispert.com/v1/api/
+
+
+英語取れるURL
+http://api.ekispert.jp/v1/json/search/course/extreme?key=キー&viaList=22828:25853&time=1000&language=en
+
+language=enがついてるかどうかの判定
+
+Webサービスの他言語化に関する仕様書
+http://192.168.30.233:8080/projects/webservice/wiki/Web%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9
+
