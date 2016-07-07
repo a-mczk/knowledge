@@ -1,0 +1,121 @@
+アセットパイプライン
+  たくさんあるcssやjsを１つのファイルに圧縮することで読み込み速度を上げることができる
+
+プリコンパイル-----------------------------------
+プリコンパルで圧縮されたファイルはpublic配下にハッシュ値付きで作成される。
+アセットファイルが上のようにURLでアクセスするにはプリコンパイルをする必要があります。プリコンパイルは次のような働きをします。
+  1 app/assets/、lib/assets/、vendor/assets/ 等から対象ファイルを探索
+  2 ERB、CoffeeScript、SCSS などのエンジンを使って JavaScript、CSS ファイルに展開
+  3 複数の JavaScript や CSS をそれぞれ１つのファイルに連結
+  4 JavaScript と CSS を圧縮
+  5 アセットファイル名にハッシュ値（MD5）を付加
+  例）application.css ⇒ application-908e25f4bf641868d8683022a5b62f54.css
+  6 できあがったアセットファイルを public/assets/ ディレクトリに保存
+  対象ファイル：JavaScript、CSS、画像ファイル
+
+プリコンパイルの対象
+  app/assets/というパスを含み
+  .js、.css以外の資産 または
+  application.js、application.css
+  がプリコンパイルの対象となります。
+
+プリコンパイルの仕方
+  デプロイの前にプリコンパイル!
+  これをやっておかないと、アクセス時に「ファイルがプリコンパイルされていないよ」と怒られる。
+  (production環境では「コンパイル済みのファイルを探す」という動きをとります。)
+  (app/assetsはproduction環境では見てない)
+
+  $ rake assets:precompile RAILS_ENV=環境
+  （Rails5ではコマンド変わってる）
+
+  プリコンパイルされていないファイルを動的にプリコンパイルするよう設定しておくこともできる。（手動コンパイルが推奨）
+  config.assets.compile = true
+-------------------------------------------------
+
+資源（アセット）の結合について、
+  これはSprocketというgemがあって、そいつがいろいろとよしなにしてくれるわけですが、そのためにマニフェストファイルというものを使う。
+  これは、どのファイルを読みこんで、1ファイルにまとめればいいのかをSprocketが把握するためのものです。(app/assets/javascripts/application.js)
+
+  資産結合のベストプラクティスは共通のをapplication、他はコントローラーごとにまとめる
+
+-------------------------------------------
+image_tag と　asset_path
+  Railsでは
+  <%= stylesheet_link_tag "hogehoge" %>
+  <%= javascript_include_tag "fugafuga" %>
+  <%= image_tag "piyopiyo.png" %>
+  などのようにして呼び出せば、上記3つのディレクトリを検索して、そのうちのどこかに目的のファイルがあればそれを読み込む。
+
+  Rails4では
+  public/assets/first-xxxxx.png  #xxxxxはハッシュ値
+  とハッシュ値付きのものしか生成されない。
+
+  そのため直接パスを指定していると書いてある通りのファイル名がリクエストされ、404となる。
+  これに対する解決方法はasset_pathメソッドを利用する。
+  <img src="<%= asset_path 'first.png' %>" />
+  ※asset_pathメソッドはdevとかproとかの環境ごとによしなにパスを生成するヘルパー
+
+
+-------------------------------------------
+
+例
+  どのページでも共通に読み込みたい JavaScript が以下の二つだった場合。
+  app/assets/javascripts/hogehoge/fugafuga.js
+  app/assets/javascripts/areare/korekore.js.erb
+
+  //= require_tree . を削除してこんな風に修正。
+  application.js.erb
+    //= require jquery  
+    //= require jquery_ujs  
+    //= require hogehoge/fugafuga
+    //= require areare/korekore
+
+  この状態では、app/assets/javascripts/ 配下に置かれているJSファイル群はAssets Pipeline の対象外になってしまう。
+  （プリコンパイルの対象を参考）
+  application.js の一部としてまとめられることはないものの、ダイジェスト化（ファイル名がMD5ハッシュ付きになるアレ）なども行われなくなるので、
+  以下の行を追加。
+  production.rb
+    config.assets.precompile += ['*.js']
+
+  JSファイル全部じゃなくて特定のファイルだけAssets Pipelineの対象にしたい場合は、このように書く。
+  production.rb
+    config.assets.precompile +=  ['admin.js', 'admin.css', 'swfObject.js']
+  特定のディレクトリだけとかだとこうなる？（未検証）
+  production.rb
+    config.assets.precompile += ['directory/*.js']
+
+  あとは、必要に応じて View で呼ぶという手。
+  その際は、javascript_include_tag を使います。
+  例えば以下のようなJSファイルを View で読み込みたい場合。
+  app/assets/javascripts/kokohadoko/watashihadare.js.erb
+  <%= javascript_include_tag 'kokohadoko/watashihadare' %>
+  ってのを書けばいい。MD5ハッシュ付きのアレなJSファイルをちゃんと読み込んでくれます。
+
+  cssも同じ
+
+----------------------------------------------
+
+<%= javascript_include_tag "application" %>
+<%= stylesheet_link_tag "application" %>
+
+
+Railsは以下の行を含むデフォルトのapp/assets/stylesheets/application.cssファイルも作成します。
+
+/* ...
+*= require_self
+*= require_tree .
+*/
+Rails 4はapp/assets/javascripts/application.jsとapp/assets/stylesheets/application.css
+ファイルを両方作成します。これはRailsアプリケーション新規作成時に
+--skip-sprocketsを指定するかどうかにかかわらず行われる。これにより、必要に応じて後からアセットパイプラインを追加することもできる。
+
+JavaScriptで使用できるディレクティブはスタイルシートでも使用できます
+(なおJavaScriptと異なりスタイルシートは明示的にインクルードされるという違いがある)CSSマニフェストにおけるrequire_treeディレクティブの動作はJavaScriptの場合と同様に現在のディレクトリにあるすべてのスタイルシートをrequireします。
+
+上の例ではrequire_selfが使用されています。このディレクティブは、require_self呼び出しが行われたその場所にCSSファイルがあれば読み込みます。
+
+参考
+http://qiita.com/Oakbow/items/2e712e05bb4bbf68faf5
+http://railsguides.jp/asset_pipeline.html#%E3%83%9E%E3%83%8B%E3%83%95%E3%82%A7%E3%82%B9%E3%83%88%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%A8%E3%83%87%E3%82%A3%E3%83%AC%E3%82%AF%E3%83%86%E3%82%A3%E3%83%96
+http://web-k.github.io/blog/2013/01/09/assets-pipeline/
+http://ruby.studio-kingdom.com/rails/guides/asset_pipeline

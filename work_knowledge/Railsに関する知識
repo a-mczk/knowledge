@@ -1,0 +1,6 @@
+
+link_toとa hrefとurl_for
+  link_toタグを使うと各ルーティングに対応した<a>タグを生成する
+  url_forはurl作るだけでlink_toはリンクをつくってくれる
+
+railsではcontrollerでbefore_actionを定義することで、アクションの前に処理を差し込むことができる

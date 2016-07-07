@@ -1,0 +1,32 @@
+Courseクラスには<Course>以下がまるまる入ってるかんじ
+ekisuke全体的にそういう考え方
+
+patterns = @attr["OperationLinePattern"].class == Array ? @attr["OperationLinePattern"] : [@attr["OperationLinePattern"]]
+
+# 要素が複数の時
+  xml
+  <Course>
+    <Route>
+    </Route>
+    <Route>
+    </Route>
+  </Course>
+  json
+  {"course":
+    [
+      {"route": ""},
+      {"route": ""}
+    ]
+  }
+# 要素が単一の時
+  xml
+  <Course>
+    <Route>
+    </Route>
+  </Course>
+  json
+  {"course":
+    {"route": ""}
+  }
+
+  route配下の要素にアクセスするのに、上としたでやり方違う

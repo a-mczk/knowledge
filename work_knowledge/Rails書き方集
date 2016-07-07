@@ -1,0 +1,8 @@
+hoge.css.scssの場合
+.hoge {
+  background-image: image-url("hoge.png");
+}
+
+hoge.html.erbの場合
+<img src="<%= asset_path "hoge.png" %>" />
+<div style="background-image:url(<%= asset_path "hoge.png" %>)" />
