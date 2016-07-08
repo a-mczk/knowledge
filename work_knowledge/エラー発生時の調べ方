@@ -1,0 +1,6 @@
+ログを見る
+  # /var/log/ 以下にnginxのログだったりがある
+  [root@ip-10-2-11-220 ~]# /service/ekispert-for-web/log/ サービス内のログで色々見れる
+
+psコマンドを使う
+  出てきたらちゃんと動いてる

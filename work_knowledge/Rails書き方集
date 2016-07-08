@@ -9,3 +9,6 @@ hoge.html.erbの場合
 
 <%= image_tag("gotop_arrow.gif", :alt => "", :size => "11×11") %> 
 
+画像のリンクを生成
+<%= link_to image_tag("logo.png"), :action => "index" %>
+# <a href="/blogs"><img alt="Logo" src="/images/logo.png" /></a>

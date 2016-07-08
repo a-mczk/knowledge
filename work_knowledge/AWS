@@ -1,0 +1,9 @@
+今立ち上がってるインスタンスを複製
+  現インスタンスを右クリック→Image→Crate Image
+  作ったAMIから作成
+
+AutoAssignedPublicIP
+  Public IPを自動でつけます設定
+
+unicorn
+  bundle exec unicorn -c config/unicorn/staging.rb -E staging -D

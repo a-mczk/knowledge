@@ -1,0 +1,9 @@
+$diff -r "hoge hoge" home/work  差分比較
+  -r 再帰的に比較する(home/work以下のファイル全部)
+  -q 差分のあったファイル名のみ表示
+  比較文字にスペースがなければ""いらない
+
+control + a 行初めに移動
+control + e 行末に移動
+
+com + delete 1行消す
