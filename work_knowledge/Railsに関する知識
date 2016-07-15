@@ -1,7 +1,8 @@
 
 link_toとa hrefとurl_for
   link_toタグを使うと各ルーティングに対応した<a>タグを生成する
-  url_forはurl作るだけでlink_toはリンクをつくってくれる
+  url_forはアプリケーションを参照するURL(controllerとactionとかの)を生成するので
+  外部リンクなんかは絶対link_to
 
 railsではcontrollerでbefore_actionを定義することで、アクションの前に処理を差し込むことができる
 
@@ -19,3 +20,13 @@ view_context
 RailsをローカルでProductionモードで起動させる方法
   http://ruby-rails.hatenadiary.com/entry/20141110/1415623670
   http://qiita.com/k4zzk/items/0afb353b36581e3649ff
+
+RailsでURLにパラメータを追加してリンクを生成する方法
+  mergeメソッドを利用することで、元々URLについていたパラメータ情報を消さずに、追加していくことができる。
+  例えば、現在のURLが「http://example.com?param1=fuga」の時に、
+
+  <%= link_to '[URL]', params.merge(param2: 'hoge') %>
+  上記のようにして出力されたリンクをクリックすると…
+
+  http:://exmaple.com?param1=fuga&param2=hoge
+  のように、パラメータが連結されたURLにジャンプする。

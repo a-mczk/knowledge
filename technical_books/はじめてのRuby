@@ -37,3 +37,9 @@
           kore = [1,2]
           x, y = kore #xが1,yが2
           hoge(kore) #引数が１つしかきてないエラーになる
+
+    def式
+      def prod(x,y) x*y end #1行にまとめるスタイル
+      def prod x,y; x*y end #括弧を省略して１行にまとめるスタイル
+
+      

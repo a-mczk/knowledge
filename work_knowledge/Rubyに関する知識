@@ -27,3 +27,28 @@ http://rubist.blog77.fc2.com/blog-entry-97.html
 
 ・ダブルクォーテーション　 ･･･ 文字列中の変数を変数値に置換する
 ・シングルクォーテーション ･･･ 文字列中の変数を変数値に置換しない
+
+injectへの理解
+  ary.inject(init) { |result, item| ...}
+  これは以下のコードと同じである
+
+  result = init
+  ary.each do |item|
+    result = ...
+  end
+
+  和を求めるときは「result + item」を、
+  最大値を求めるときは「(item > result) ? item : result」を 
+  「...」の部分に書けばいいということ
+  例：[1, 2, 3, 4, 5].inject(0) { |sum, i| sum + i }   # => 15
+      sum = [1, 2, 3, 4, 5].inject(:+)      # => 15
+      どっちも原理は同じ
+
+
+
+true/falseのことをブール値という
+
+繰り返しで一時的に使う変数i→j→kの順番
+
+単純な繰り返しにはfor 条件が複雑になってきたらwhile
+（どっちも変わらない）
