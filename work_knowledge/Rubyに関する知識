@@ -52,3 +52,9 @@ true/falseのことをブール値という
 
 単純な繰り返しにはfor 条件が複雑になってきたらwhile
 （どっちも変わらない）
+
+文字をエスケープしたい
+  raw(文字列)
+
+知って得する！５５のRubyのトリビアな記法
+http://melborne.github.io/2013/03/04/ruby-trivias-you-should-know-4/
