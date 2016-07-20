@@ -1,0 +1,137 @@
+JSを記述する（読み込み的に下のほうがいい）
+<script type="text/javascript">
+</script>
+</body>
+
+-----------
+document.getElementByID
+でID呼び出しができる
+  例
+  <>input id="hoge" type="button"...>
+
+  document.getElementByID('hoge').onclick = function(){
+    if...{
+
+    }
+  }
+-----------
+ファンクションを作る（メソッドみたいな）
+  fubction ファンクション名(パラメータ){
+    処理
+  }
+-----------
+
+
+
+デバッグの方法
+http://qiita.com/snoguchi/items/8f6bb62a3166eca23ac3
+
+関数によったやつ-----------------------------------------------------
+
+三項演算子
+  (条件) ? 条件が成り立った時の処理　：　成り立たなかった時の処理
+    
+    var price = '';
+    if (price === ''){
+        price = 0;
+    } else {
+        price = price;
+    }
+
+    ↑もっと簡単に書ける
+    var price = '';
+    price = (price === '') ? 0 : price;
+
+画面ウィンドウ出したい
+  window.alert('文字')
+    window→オブジェクト
+    aleat→メソッド
+    ('画面ウィンドウ出てくるやつ')→パラメーター
+
+    alert('画面ウィンドウ出てくるやつ')
+    windowは省略可能
+
+画面ウィンドウでyesかnoボタン出したい
+  confirm('文字')
+    例：
+      if (confirm('いいですか？')) {
+        okのとき
+      } else {
+        ダメなとき
+      }
+
+画面ウィンドウで文字入力させたい
+  prompt('文字')
+    戻り値は入力してもらったやつ（最近あまり使われてない）
+
+HTMLみたいに文字書きたい
+  document.wrute('文字');
+
+日付を取得
+  var now = new Date();
+時刻を取得
+  var hour = now.getHours();
+    getMinutes（分）
+    getSeconds(秒)
+
+メニューの内容をリストに表示したい
+  連想配列
+    var 配列名 = {
+    インデックス1: 値1,
+    インデックス2: 値2,
+    ....
+    }
+    for (インデックス in 連想配列) {
+    ...
+    }
+
+  例
+  var menus = {
+    'home.html': 'ホーム',
+    'serect.html': '選択'
+  }
+
+  for ( var m in menues) {
+    document.write('<li><a href="' + m + '" title="' + m + ' に移動します">' + menus[m] + '</a></li>');
+  }
+
+
+
+イベント（きっかけ）
+  ・タグの中で定義
+  ・プログラム中
+  ・jQuery
+
+クリックされた時
+  onclick
+    <input type="button"... onclick=" if (confirm('閉じてよろしいですか？')) { window.close(); }">
+
+値が変化した時に動くイベント
+  onchange
+  例
+    <select id="age" name="age">
+      <option value="">お選びください</option>
+      <option value="10">10代</option>
+      <option value="20">20代</option>
+    </select>
+
+    document.getElementByID('age').onchange = function(){
+      var age = document.getElementByID('age').value;
+
+      if ( age === 10 ){
+        alert('10歳以下の方は、半額です');
+      }
+    }
+
+switch (比べる基準) {
+case 選択肢１:
+  プログラム
+  break;
+case 選択肢２:
+  プログラム
+  break;
+}
+
+数字に変換
+  new String(12345)
+
