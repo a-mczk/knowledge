@@ -30,3 +30,46 @@ RailsでURLにパラメータを追加してリンクを生成する方法
 
   http:://exmaple.com?param1=fuga&param2=hoge
   のように、パラメータが連結されたURLにジャンプする。
+
+
+if _mark[:line_name]!=I18n.t'none' && _mark[:line_name]
+これだと、 'none'がただの文字列なのか、引数なのかわからない んじゃないですかね。
+だから条件式おかしいんじゃね？って言われてるのでは
+
+# こういう風にも取れるし（&&忘れてるんじゃね？文法エラーよ）
+if _mark[:line_name]!=I18n.t && 'none' && _mark[:line_name]
+
+# こういう風にも取れる（||忘れてんじゃね？文法エラーよ）
+if _mark[:line_name]!=I18n.t || 'none' && _mark[:line_name]
+因みに、「'none'はI18nのtメソッドの引数ですよ！」と明示してやれば動きました。
+
+if _mark[:line_name]!=I18n.t('none') && _mark[:line_name]
+面倒で時間もかかりますが、こうやって調べると後々応用も効いてきますよー
+合ってるかどうか保証はないのでご参考までに。
+
+
+基本的に、
+
+データを追加、更新、削除するときは、「リダイレクト」
+データの取得して表示するときは、「レンダー」
+
+
+Method: Padrino.root
+# Referencing a file in config called settings.yml
+Padrino.root("config", "settings.yml")
+# returns PADRINO_ROOT + "/config/setting.yml"
+
+
+
+RubyのFile.expand_path('相対パス', __FILE__)の意味
+http://maeharin.hatenablog.com/entry/20130104/p1
+
+Railsのデバックが捗るエラー画面 Better Errors
+
+request変数（通常はコントローラからしか触れない．）をモデルから使いたい場合のやり方．
+http://rails.clickyourstyle.com/articles/29
+
+  # モデルから直接requestの情報を参照できるようにする
+  def set_request_filter
+    Thread.current[:request] = request
+  end

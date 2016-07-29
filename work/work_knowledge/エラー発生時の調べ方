@@ -4,3 +4,9 @@
 
 psコマンドを使う
   出てきたらちゃんと動いてる
+
+wrong number of arguments (a for b)
+  a＝呼び出し側の引数の数
+  b＝メソッド側の引数の数
+
+NameError(初期化されていないクラス変数)
